@@ -35,9 +35,13 @@ class HotelsPage extends React.Component<HotelsPageProps, {}> {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         {this.state.redirectToAddHotelPage && <Redirect to="/hotel/:id" />}
-        <h3>Hotels</h3>
+        <h2>Hotels</h2>
+        <HotelsList
+          hotels={this.props.hotels}
+          onDeleteClick={this.handleDeleteHotel}
+        />
         <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-hotel"
@@ -45,11 +49,7 @@ class HotelsPage extends React.Component<HotelsPageProps, {}> {
         >
           Add Hotel{" "}
         </button>
-        <HotelsList
-          hotels={this.props.hotels}
-          onDeleteClick={this.handleDeleteHotel}
-        />
-      </React.Fragment>
+      </>
     );
   }
 }

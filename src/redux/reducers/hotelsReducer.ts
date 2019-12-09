@@ -1,9 +1,7 @@
 import * as types from "../actions/hotelactionTypes";
-import { InitialState } from "./initialState";
 import { Hotel } from "../../models/Hotel";
 
 let hotels: Hotel[] = [];
-
 export default function courseReducer(state: Hotel[], action: any) {
   switch (action.type) {
     case types.LOAD_HOTELS_SUCCESS:

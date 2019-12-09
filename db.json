@@ -1,0 +1,48 @@
+{
+  "hotels": [
+    {
+      "id": 1,
+      "name": "Park Grand Kensignton",
+      "address": "33-37 Hogarth Road Kensington, London SW5 0QQ",
+      "description": "Free wifi is offered to guests, and rooms at Shaftesbury Kensington offer a flat screen TV, a minibar,air conditioning,24 hour front desk, a concierge, and room service.",
+      "city": {
+        "id": 1,
+        "name": "London"
+      },
+      "raiting": 4.5
+    },
+    {
+      "id": 2,
+      "name": "Novotel Paris Les Halles",
+      "address": "8 Place Marguerite de Navarre, 75001",
+      "description": "The Novotel Paris Les Halles is a 4 star hotel in the centre of Paris with direct Metro and RER train connections to Charles de Gaulle and Orly airport.",
+      "city": {
+        "id": 2,
+        "name": "Paris"
+      },
+      "raiting": 4
+    },
+    {
+      "id": 3,
+      "name": "Regent Berlin",
+      "address": "Charlottenstrasse 49, 10117",
+      "city": {
+        "id": 3,
+        "name": "Berlin"
+      },
+      "description": "For travelers visiting Berlin, Regent Berlin is an excellent choice for rest and rejuvenation. Well-known for its luxury environment and proximity to great restaurants and attractions.",
+      "raiting": 4
+    },
+    {
+      "id": 4,
+      "name": "Grand Hyatt",
+      "address": "9Stockton Street",
+      "city": {
+        "id": 4,
+        "name": "San Francisco"
+      },
+      "description": "Located in the heart of Union Square, Grand Hyatt San Francisco offers magnificent city skyline and stunning bay views, modern accommodations with residential style amenities and state-of-the-art technology.",
+      "raiting": 4
+    }
+  ]
+}

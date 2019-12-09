@@ -9,14 +9,16 @@ interface ManageHotelProps {
   hotels: Hotel[];
   hotel?: Hotel;
   loadHotels: any;
-  saveHotel: any;
+  saveNewHotel: any;
+  editHotel: any;
   history: any;
 }
 
 const ManageHotel = ({
   hotels,
   loadHotels,
-  saveHotel,
+  saveNewHotel,
+  editHotel,
   history,
   ...props
 }: ManageHotelProps) => {
@@ -24,10 +26,11 @@ const ManageHotel = ({
     { id: 1, name: "London" },
     { id: 2, name: "Paris" },
     { id: 3, name: "Berlin" },
-    { id: 4, name: "San Francisko" }
+    { id: 4, name: "San Francisco" }
   ];
 
-  const [hotel, setHotel] = useState({ ...props.hotel });
+  let currentHotel: Hotel = { ...props.hotel };
+  const [hotel, setHotel] = useState(currentHotel);
 
   useEffect(() => {
     if (hotels.length === 0) {
@@ -49,9 +52,11 @@ const ManageHotel = ({
 
   const handleSave = (event: any) => {
     event.preventDefault();
-    saveHotel(hotel);
-    //after save is implemented should return promise and put this in .then
-    history.push("/hotels");
+    if (hotel.id !== 0) {
+      editHotel(hotel).then(history.push("/hotels"));
+    } else {
+      saveNewHotel(hotel).then(history.push("/hotels"));
+    }
   };
 
   return (
@@ -67,7 +72,7 @@ const ManageHotel = ({
 
 const mapStateToProps = (state: InitialState, ownProps: any) => {
   const id = parseInt(ownProps.match.params.id, 10);
-  let newHotel: Hotel = { id: 0 };
+  let newHotel: Hotel = { id: 0, name: "", address: "", description: "" };
   return {
     hotels: state.hotels,
     hotel: id ? state.hotels.find(hotel => hotel.id == id) : newHotel

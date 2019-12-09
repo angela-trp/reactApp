@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
 import SelectInput from "../common/SelectInput";
 import { Hotel, City, SelectMenuItem } from "../../models/Hotel";
@@ -31,11 +30,6 @@ const HotelForm = ({
     <div className={"container"}>
       <form onSubmit={onSave} className={"col-md-4 col-md-offset-6"}>
         <h2>{hotel.id ? "Edit" : "Add"} Hotel</h2>
-        {/* {errors.onSave && (
-        <div className="alert alert-danger" role="alert">
-          {errors.onSave}
-        </div>
-      )} */}
         <TextInput
           name="name"
           label="Name"

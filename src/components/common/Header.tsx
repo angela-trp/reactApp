@@ -12,7 +12,7 @@ const Header = () => {
       {" | "}
       <NavLink to="/hotels" activeStyle={activeStyle}>
         Hotels
-      </NavLink>{" "}
+      </NavLink>
     </nav>
   );
 };
