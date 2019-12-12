@@ -1,7 +1,12 @@
 import React from "react";
 import TextInput from "../common/TextInput";
 import SelectInput from "../common/SelectInput";
-import { Hotel, City, SelectMenuItem } from "../../models/Hotel";
+import {
+  Hotel,
+  City,
+  SelectMenuItem,
+  ValidationErrors
+} from "../../models/Hotel";
 
 interface HotelFormProps {
   hotel: Hotel;
@@ -9,14 +14,15 @@ interface HotelFormProps {
   onSave: any;
   onChange: any;
   saving: boolean;
+  errors: ValidationErrors;
 }
-
 const HotelForm = ({
   hotel,
   cities,
   onSave,
   onChange,
-  saving = false
+  saving = false,
+  errors
 }: HotelFormProps) => {
   let selectMenuItems: SelectMenuItem[] =
     cities.length > 0
@@ -35,12 +41,14 @@ const HotelForm = ({
           label="Name"
           value={hotel.name || ""}
           onChange={onChange}
+          error={errors.name}
         />
         <TextInput
           name="address"
           label="Address"
           value={hotel.address || ""}
           onChange={onChange}
+          error={errors.address}
         />
         <SelectInput
           name="city"
@@ -49,6 +57,7 @@ const HotelForm = ({
           defaultOption="Select City"
           options={selectMenuItems}
           onChange={onChange}
+          error={errors.city}
         />
 
         <TextInput
@@ -56,6 +65,7 @@ const HotelForm = ({
           label="Description"
           value={hotel.description || ""}
           onChange={onChange}
+          error={errors.description}
         />
 
         <button type="submit" disabled={saving} className="btn btn-primary">

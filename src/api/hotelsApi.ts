@@ -31,8 +31,7 @@ export function saveNewHotel(hotel: Hotel) {
 
 export function deleteHotel(hotelId: number) {
   return fetch(baseUrl + hotelId, {
-    method: "DELETE",
-    headers: { "content-type": "application/json" }
+    method: "DELETE"
   })
     .then(handleResponse)
     .catch(handleError);

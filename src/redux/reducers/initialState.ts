@@ -1,5 +1,7 @@
 import { Hotel } from "../../models/Hotel";
+import { HotelsState } from "../../models/Hotel";
 
+// The top-level state object
 export interface InitialState {
-  hotels: Hotel[];
+  hotelsManagement: HotelsState;
 }

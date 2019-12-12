@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import HotelForm from "./HotelForm";
-import { Hotel, City } from "../../models/Hotel";
+import { Hotel, City, ValidationErrors, HotelsState } from "../../models/Hotel";
 import { connect } from "react-redux";
 import { InitialState } from "../../redux/reducers/initialState";
 import * as actions from "../../redux/actions/hotelActions";
+import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 interface ManageHotelProps {
   hotels: Hotel[];
@@ -12,6 +14,7 @@ interface ManageHotelProps {
   saveNewHotel: any;
   editHotel: any;
   history: any;
+  loading: boolean;
 }
 
 const ManageHotel = ({
@@ -20,6 +23,7 @@ const ManageHotel = ({
   saveNewHotel,
   editHotel,
   history,
+  loading,
   ...props
 }: ManageHotelProps) => {
   let cities: City[] = [
@@ -31,7 +35,8 @@ const ManageHotel = ({
 
   let currentHotel: Hotel = { ...props.hotel };
   const [hotel, setHotel] = useState(currentHotel);
-
+  let errorsObject: ValidationErrors = { isInvalid: false };
+  const [errors, setErrors] = useState(errorsObject);
   useEffect(() => {
     if (hotels.length === 0) {
       loadHotels();
@@ -52,30 +57,70 @@ const ManageHotel = ({
 
   const handleSave = (event: any) => {
     event.preventDefault();
+    if (!formIsValid()) return;
     if (hotel.id !== 0) {
-      editHotel(hotel).then(history.push("/hotels"));
+      editHotel(hotel).then(() => {
+        toast.success("Hotel edited.");
+        history.push("/hotels");
+      });
     } else {
-      saveNewHotel(hotel).then(history.push("/hotels"));
+      saveNewHotel(hotel).then(() => {
+        toast.success("Hotel saved.");
+        history.push("/hotels");
+      });
     }
   };
 
-  return (
+  function formIsValid(): boolean {
+    let errors: ValidationErrors = { isInvalid: false };
+    if (!hotel.name) {
+      errors.name = "Name is required";
+      errors.isInvalid = true;
+    }
+    if (!hotel.address) {
+      errors.address = "Address is required";
+      errors.isInvalid = true;
+    }
+    if (!hotel.description) {
+      errors.description = "Description is required";
+      errors.isInvalid = true;
+    }
+    if (!hotel.city) {
+      errors.city = "City is required";
+      errors.isInvalid = true;
+    }
+
+    if (errors.isInvalid) {
+      setErrors(errors);
+    }
+    return !errors.isInvalid;
+  }
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <HotelForm
       hotel={hotel}
       cities={cities}
       saving={false}
       onChange={handleChange}
       onSave={handleSave}
+      errors={errors}
     />
   );
 };
 
 const mapStateToProps = (state: InitialState, ownProps: any) => {
+  let hotelManagement = state.hotelsManagement;
   const id = parseInt(ownProps.match.params.id, 10);
   let newHotel: Hotel = { id: 0, name: "", address: "", description: "" };
   return {
-    hotels: state.hotels,
-    hotel: id ? state.hotels.find(hotel => hotel.id == id) : newHotel
+    hotels: hotelManagement.hotels,
+    hotel:
+      id && hotelManagement.hotels.length > 0
+        ? hotelManagement.hotels.find(hotel => hotel.id == id)
+        : newHotel,
+    loading: hotelManagement.loading
   };
 };
 
